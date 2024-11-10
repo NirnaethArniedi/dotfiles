@@ -157,3 +157,4 @@ alias l="ls -lah"
 # Created by `pipx` on 2024-11-06 08:48:07
 export PATH="$PATH:/home/alenormand/.local/bin"
 eval "$(uv generate-shell-completion zsh)"
+export EDITOR=nvim
