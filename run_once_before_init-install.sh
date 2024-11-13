@@ -43,7 +43,7 @@ wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
 tar zxpf luarocks-3.11.1.tar.gz
 cd luarocks-3.11.1
 ./configure && make && sudo make install
-rm -rf luarocks-3.11.1
+rm -rf $HOME/luarocks-3.11.1 luarocks-3.11.1.tar.gz
 ##
 sudo npm install -g neovim corepack prettier
 ## lazygit
@@ -53,6 +53,7 @@ tar xf lazygit.tar.gz lazygit
 sudo install lazygit -D -t /usr/local/bin/
 rm -f lazygit
 ##
+sudo luarocks install jsregexp
 ## lazyvim
 git clone https://github.com/LazyVim/starter $HOME/.config/nvim
 rm -rf $HOME/.config/nvim/.git
@@ -60,7 +61,7 @@ rm -rf $HOME/.config/nvim/.git
 #
 
 # zsh
-chsh -s $(which zsh)
+sudo chsh -s $(which zsh) $(whoami)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
