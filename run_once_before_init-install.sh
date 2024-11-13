@@ -45,7 +45,8 @@ wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
 tar zxpf luarocks-3.11.1.tar.gz
 cd luarocks-3.11.1
 ./configure && make && sudo make install
-rm -rf $HOME/luarocks-3.11.1 $HOME/luarocks-3.11.1.tar.gz
+
+
 ##
 sudo npm install -g neovim corepack prettier
 ## lazygit
@@ -76,3 +77,5 @@ uv tool install -p 3.13 powerline-status
 git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 #
 sudo -k
+
+rm -rf $HOME/luarocks-3.11.1 $HOME/luarocks-3.11.1.tar.gz
