@@ -12,7 +12,6 @@ sudo apt install -y \
   python3-full \
   build-essential \
   libreadline-dev \
-  cargo \
   autojump \
   neovim \
   ripgrep \
@@ -32,6 +31,9 @@ sudo apt install -y \
 
 mkdir $HOME/.ssh
 
+# rustup
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -43,7 +45,7 @@ wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
 tar zxpf luarocks-3.11.1.tar.gz
 cd luarocks-3.11.1
 ./configure && make && sudo make install
-rm -rf $HOME/luarocks-3.11.1 luarocks-3.11.1.tar.gz
+rm -rf $HOME/luarocks-3.11.1 $HOME/luarocks-3.11.1.tar.gz
 ##
 sudo npm install -g neovim corepack prettier
 ## lazygit
@@ -67,8 +69,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 mv .zshrc.pre-oh-my-zsh .zshrc
-echo 'eval "$(uv generate-shell-completion zsh)"' >>$HOME/.zshrc
-echo 'eval "$(uvx --generate-shell-completion zsh)"' >>$HOME/.zshrc
 #
 
 # tmux

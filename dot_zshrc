@@ -11,6 +11,7 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$PATH:$HOME/.local/bin"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -101,11 +102,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -120,8 +121,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 . /usr/share/autojump/autojump.sh
 alias ipython="uv run ipython"
-cd
-
 alias cal="ncal -wb"
 alias v=nvim
 # alias cat=batcat
@@ -131,7 +130,5 @@ alias history="fc -liD 1"
 alias l="ls -lah"
 . "$HOME/.cargo/env"
 
-# Created by `pipx` on 2024-11-06 08:48:07
-export PATH="$PATH:$HOME/.local/bin"
 eval "$(uv generate-shell-completion zsh)"
-export EDITOR=nvim
+eval "$(uvx --generate-shell-completion zsh)"
