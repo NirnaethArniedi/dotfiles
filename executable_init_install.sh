@@ -40,7 +40,7 @@ uv tool install hererocks
 cargo install stylua
 ## luarocks
 wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
-tar zxpf luarocks-3.11.1.tar.gtar zxpf luarocks-3.11.1.tar.gz
+tar zxpf luarocks-3.11.1.tar.gz
 cd luarocks-3.11.1
 ./configure && make && sudo make install
 rm -rf luarocks-3.11.1
@@ -61,7 +61,7 @@ rm -rf $HOME/.config/nvim/.git
 
 # zsh
 chsh -s $(which zsh)
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
