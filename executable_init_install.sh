@@ -65,13 +65,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+mv .zshrc.pre-oh-my-zsh .zshrc
 echo 'eval "$(uv generate-shell-completion zsh)"' >>$HOME/.zshrc
 echo 'eval "$(uvx --generate-shell-completion zsh)"' >>$HOME/.zshrc
 #
 
 # tmux
-uv tool install powerline-status
+uv tool install -p 3.13 powerline-status
 git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 #
-
 sudo -k

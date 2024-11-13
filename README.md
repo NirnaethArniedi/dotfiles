@@ -9,9 +9,8 @@ See <https://www.chezmoi.io/quick-start> for informations about chezmoi.
   - Generate ssh key (ssh-keygen -t RSA -C "$github_email" -f "$github_username")
   - Add key to ssh agent (ssh-add $key_file)
   - Copy public key to github account
-- Run `sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply $GITHUB_USERNAME`
-  to install chezmoi and copy dotfiles. (space between -- and init is
-  intentionnal !)
+- Run `sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin init --apply $GITHUB_USERNAME`
+  to install chezmoi and copy dotfiless.a
 
 ## Next steps
 
