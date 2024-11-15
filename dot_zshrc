@@ -89,6 +89,7 @@ plugins=(
 	compleat
 	zsh-autosuggestions
 	zsh-syntax-highlighting
+  zsh-interactive-cd
 	ssh-agent
 )
 zstyle :omz:plugins:ssh-agent quiet yes
