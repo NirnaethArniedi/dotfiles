@@ -94,6 +94,7 @@ plugins=(
 )
 zstyle :omz:plugins:ssh-agent quiet yes
 zstyle :omz:plugins:ssh-agent lazy yes
+zstyle :omz:plugins:ssh-agent ssh-add-args -q
 source $ZSH/oh-my-zsh.sh
 # User configuration
 
