@@ -15,7 +15,6 @@ sudo apt install -y \
   autojump \
   neovim \
   ripgrep \
-  fzf \
   fd-find \
   unzip \
   nodejs \
@@ -28,4 +27,5 @@ sudo apt install -y \
   zsh \
   tmux \
   btop \
+  golang \
   tree
