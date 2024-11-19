@@ -28,4 +28,5 @@ sudo apt install -y \
   tmux \
   btop \
   golang \
+  ncal \
   tree
