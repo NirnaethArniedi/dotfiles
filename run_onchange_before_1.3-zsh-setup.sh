@@ -33,7 +33,10 @@ fi
 if ! [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
-
+## pyautoenv
+if ! [ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/pyautoenv" ]; then
+  git clone https://github.com/hsaunders1904/pyautoenv ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/pyautoenv
+fi
 # since we managed the dot files by ourselves we
 # do not want oh-my-zsh to replace a already existent .zshrc
 mv .zshrc.pre-oh-my-zsh .zshrc 2>/dev/null
