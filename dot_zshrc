@@ -1,5 +1,10 @@
+
 export PATH="$PATH:$HOME/.local/bin:$HOME/go/bin"
 
+if [ -d /usr/lib/jvm/java-17-openjdk-amd64/ ]; then
+  export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+  export PATH=$JAVA_HOME/bin:$PATH
+fi
 if [ "$TMUX" = "" ]; then tmux new -As0; fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -96,6 +101,7 @@ zstyle :omz:plugins:ssh-agent quiet yes
 zstyle :omz:plugins:ssh-agent lazy yes
 zstyle :omz:plugins:ssh-agent ssh-add-args -q
 source $ZSH/oh-my-zsh.sh
+source ~/.config/zsh/fzf-git.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -125,6 +131,7 @@ fi
 alias ipython="uv run ipython"
 alias cal="ncal -Mwb"
 alias v=nvim
+alias vp="nvim ."
 # alias cat=batcat
 # alias grep=batgrep
 # alias man=batman
@@ -135,3 +142,7 @@ alias l="ls -lah"
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 source <(fzf --zsh)
+if [ -f $HOME/.local_env_variables ]; then 
+  source $HOME/.local_env_variables
+fi
+
