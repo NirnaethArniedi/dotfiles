@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 return {
   -- change nvim-lspconfig options
   "neovim/nvim-lspconfig",
