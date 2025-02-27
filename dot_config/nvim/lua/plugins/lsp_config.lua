@@ -26,6 +26,9 @@ return {
           analysis = {
             -- Ignore all files for analysis to exclusively use Ruff for linting
             ignore = { "*" },
+            diagnosticMode = "openFilesOnly",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = false,
           },
         },
       },
