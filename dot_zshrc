@@ -1,5 +1,5 @@
 
-export PATH="$PATH:$HOME/.local/bin:$HOME/go/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
 if [ -d /usr/lib/jvm/java-17-openjdk-amd64/ ]; then
   export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
@@ -90,6 +90,7 @@ plugins=(
   git
   extract
   autojump
+  alias-finder
   common-aliases
   pyautoenv
   zsh-autosuggestions
@@ -100,6 +101,8 @@ plugins=(
 zstyle :omz:plugins:ssh-agent quiet yes
 zstyle :omz:plugins:ssh-agent lazy yes
 zstyle :omz:plugins:ssh-agent ssh-add-args -q
+zstyle ':omz:plugins:alias-finder' autoload yes   # Auto-suggest after commands
+zstyle ':omz:plugins:alias-finder' cheaper yes    # Only show shorter aliases
 source $ZSH/oh-my-zsh.sh
 source ~/.config/zsh/fzf-git.sh
 # User configuration
