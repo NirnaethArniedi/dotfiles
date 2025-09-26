@@ -2,14 +2,15 @@
 
 c = get_config()  # noqa
 
-from IPython.utils.PyColorize import linux_theme, theme_table
-from copy import deepcopy
+# from IPython.utils.PyColorize import linux_theme, theme_table
+# from copy import deepcopy
+#
+# dracula = deepcopy(linux_theme)
+# dracula.base = "dracula"
+# theme_table["dracula"] = dracula
 
-dracula = deepcopy(linux_theme)
-dracula.base = "dracula"
-theme_table["dracula"] = dracula
-
-c.TerminalInteractiveShell.colors = "dracula"
+c.TerminalInteractiveShell.colors = "Linux"
+c.TerminalInteractiveShell.highlighting_style = "dracula"
 # ------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 # ------------------------------------------------------------------------------
@@ -662,66 +663,6 @@ c.TerminalInteractiveShell.editor = "nvim"
 #  Default: True
 c.TerminalInteractiveShell.highlight_matching_brackets = True
 
-## Deprecated, and has not effect, use IPython themes
-#
-#          The name or class of a Pygments style to use for syntax
-#          highlighting. To see available styles, run `pygmentize -L styles`.
-#  Default: traitlets.Undefined
-# c.TerminalInteractiveShell.highlighting_style = traitlets.Undefined
-## Override highlighting format for specific tokens
-#  Default: {}
-# c.TerminalInteractiveShell.highlighting_style_overrides = {}
-#  # Colors from the Dracula theme
-#  background = "#282a36"
-#  foreground = "#f8f8f2"
-#  selection = "#44475a"
-#  comment = "#6272a4"
-#  cyan = "#8be9fd"
-#  green = "#50fa7b"
-#  orange = "#ffb86c"
-#  pink = "#ff79c6"
-#  purple = "#bd93f9"
-#  red = "#ff5555"
-#  yellow = "#f1fa8c"
-#
-#  # Create a new theme based on Dracula
-#  c.TerminalInteractiveShell.colors = "dracula"  # Using a custom name
-#
-#  # Define your theme - here we map pygments token types to style attributes
-#  # Note: You can't just import the DraculaStyle class - IPython's theme system works differently
-#
-#
-#  # Define dracula style
-#  dracula_style = {
-#      Token: foreground,
-#      Token.Prompt: purple,
-#      Token.PromptNum: purple + " bold",
-#      Token.OutPrompt: cyan,
-#      Token.OutPromptNum: cyan + " bold",
-#      Token.Name.Builtin: cyan + " italic",
-#      Token.Name.Function: green,
-#      Token.Name.Class: green + " bold",
-#      Token.String: purple,
-#      Token.Number: orange,
-#      Token.Operator: pink,
-#      Token.Keyword: pink,
-#      Token.Keyword.Constant: pink,
-#      Token.Keyword.Declaration: cyan + " italic",
-#      Token.Comment: comment,
-#      Token.Error: red + " bold",
-#      Token.Generic.Error: f"bg:{red} {foreground}",
-#      Token.Menu.Completions.Completion: f"bg:{selection} {foreground}",
-#      Token.Menu.Completions.Completion.Current: f"bg:{purple} {background}",
-#      Token.Scrollbar: f"bg:{comment}",
-#      Token.Scrollbar.Button: f"bg:{foreground}",
-#  }
-#
-#  # Register the theme with IPython
-#  c.InteractiveShell.highlighting_style_overrides = dracula_style
-#  c.TerminalInteractiveShell.true_color = True  # Enable 24-bit colors
-#
-#  # Optional: Define symbols for debugger
-#  c.TerminalInteractiveShell.highlighting_style = "dracula"
 ## Total length of command history
 #  See also: InteractiveShell.history_length
 c.TerminalInteractiveShell.history_length = 100000
@@ -977,7 +918,7 @@ c.TerminalInteractiveShell.history_load_length = 10000
 #
 #              printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 #  Default: False
-# c.TerminalInteractiveShell.true_color = False
+c.TerminalInteractiveShell.true_color = True
 
 ## The time in milliseconds that is waited for a key code
 #         to complete.
