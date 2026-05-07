@@ -5,7 +5,7 @@ if [ -d /usr/lib/jvm/java-17-openjdk-amd64/ ]; then
   export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
   export PATH=$JAVA_HOME/bin:$PATH
 fi
-if [ "$TMUX" = "" ] && [ "$TERM_PROGRAM" != "vscode" ]; then tmux new; fi
+# if [ "$TMUX" = "" ] && [ "$TERM_PROGRAM" != "vscode" ]; then tmux new; fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -135,6 +135,7 @@ alias ipython="uv run ipython"
 alias cal="ncal -Mwb"
 alias v=nvim
 alias vp="nvim ."
+alias agview="nohup uvx agentsview serve > /dev/null 2>&1 &"
 # alias cat=batcat
 # alias grep=batgrep
 # alias man=batman
@@ -156,3 +157,13 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="/home/alenormand/.local/share/fnm:$PATH"
   eval "`fnm env`"
 fi
+
+# bun completions
+[ -s "/home/alenormand/.bun/_bun" ] && source "/home/alenormand/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# opencode
+export PATH=/home/alenormand/.opencode/bin:$PATH
