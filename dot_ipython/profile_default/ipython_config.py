@@ -1,4 +1,7 @@
 # Configuration file for ipython.
+import importlib
+
+ipython_vers = importlib.metadata.version("ipython")
 
 c = get_config()  # noqa
 
@@ -8,9 +11,18 @@ c = get_config()  # noqa
 # dracula = deepcopy(linux_theme)
 # dracula.base = "dracula"
 # theme_table["dracula"] = dracula
+if int(ipython_vers.split(".")[0]) < 9:
+    c.TerminalInteractiveShell.colors = "Linux"
+    c.TerminalInteractiveShell.highlighting_style = "dracula"
+else:
+    from copy import deepcopy
+    from IPython.utils.PyColorize import linux_theme, theme_table
 
-c.TerminalInteractiveShell.colors = "Linux"
-c.TerminalInteractiveShell.highlighting_style = "dracula"
+    dracula = deepcopy(linux_theme)
+    dracula.base = "dracula"
+    theme_table["dracula"] = dracula
+
+    c.TerminalInteractiveShell.colors = "dracula"
 # ------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
 # ------------------------------------------------------------------------------
