@@ -28,3 +28,9 @@ if ! command -v fzf 2>&1 >/dev/null; then
   cd $HOME
   go install github.com/junegunn/fzf@latest
 fi
+
+# install sesh for tmux session management
+if ! command -v sesh 2>&1 >/dev/null; then
+  cd $HOME
+  go install github.com/joshmedeski/sesh@latest
+fi

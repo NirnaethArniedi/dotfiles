@@ -38,7 +38,10 @@ See <https://www.chezmoi.io/quick-start> for informations about chezmoi.
   Python)
 - Some usefull CLI tools :
   - uv as a pip/pipx full replacement (python development)
-  - autojump for fast cd
+  - zoxide for fast directory jumping, configured with `j` and without the `z` shortcut
+  - sesh for tmux session management
+  - fzf for fuzzy finding
+  - ripgrep for fast recursive search
   - btop as a cool replacement for top or htop
 
 ### How does it works ?

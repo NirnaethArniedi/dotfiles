@@ -89,7 +89,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   git
   extract
-  autojump
   alias-finder
   common-aliases
   pyautoenv
@@ -130,7 +129,6 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-. /usr/share/autojump/autojump.sh
 alias fd="fdfind"
 alias ipython="uv run ipython"
 alias cal="ncal -Mwb"
