@@ -131,8 +131,8 @@ Primary DataFrame library. I use it extensively and know the API well. When help
 - **Editor**: Neovim (nvim) + tmux
 - **Shell**: zsh with fzf
 - **Package manager**: `uv` exclusively. `uvx` for one-off tool usage.
-- **Formatting/linting**: `ruff`
-- **Testing**: `pytest` with coverage, doctest-modules
+- **Formatting/linting**: `ruff`. Run with "uv run ruff format && uv run ruff check"
+- **Testing**: `pytest` with coverage, doctest-modules. Run pytest using "uv run pytest"
 - **Containerisation**: Docker, multi-stage builds, Alpine-based images preferred
 - **Cloud**: Databricks notebook to run Spark and production data related stuff
 

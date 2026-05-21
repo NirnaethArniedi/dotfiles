@@ -131,6 +131,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 . /usr/share/autojump/autojump.sh
+alias fd="fdfind"
 alias ipython="uv run ipython"
 alias cal="ncal -Mwb"
 alias v=nvim
@@ -167,3 +168,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # opencode
 export PATH=/home/alenormand/.opencode/bin:$PATH
+
+eval "$(zoxide init --cmd j zsh)"
