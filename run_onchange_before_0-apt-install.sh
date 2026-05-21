@@ -12,7 +12,6 @@ sudo apt install -y \
   python3-full \
   build-essential \
   libreadline-dev \
-  zoxide \
   neovim \
   ripgrep \
   fd-find \

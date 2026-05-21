@@ -74,3 +74,51 @@ index 056b22c..a180389 100644
 +  go install github.com/joshmedeski/sesh@latest
 +fi
 ```
+
+```bash
+git diff -- README.md run_onchange_before_0-apt-install.sh run_onchange_before_0.1-packages-manager-installation.sh
+```
+
+```output
+diff --git a/README.md b/README.md
+index 6911a0c..1e0c178 100644
+--- a/README.md
++++ b/README.md
+@@ -38,7 +38,7 @@ See <https://www.chezmoi.io/quick-start> for informations about chezmoi.
+   Python)
+ - Some usefull CLI tools :
+   - uv as a pip/pipx full replacement (python development)
+-  - zoxide for fast directory jumping, configured with `j` and without the `z` shortcut
++  - zoxide for fast directory jumping, configured with `j` and without the `z` shortcut (installed via the upstream install script)
+   - sesh for tmux session management
+   - fzf for fuzzy finding
+   - ripgrep for fast recursive search
+diff --git a/run_onchange_before_0-apt-install.sh b/run_onchange_before_0-apt-install.sh
+index 091a007..2b61ce0 100644
+--- a/run_onchange_before_0-apt-install.sh
++++ b/run_onchange_before_0-apt-install.sh
+@@ -12,7 +12,6 @@ sudo apt install -y \
+   python3-full \
+   build-essential \
+   libreadline-dev \
+-  zoxide \
+   neovim \
+   ripgrep \
+   fd-find \
+diff --git a/run_onchange_before_0.1-packages-manager-installation.sh b/run_onchange_before_0.1-packages-manager-installation.sh
+index a180389..ddbf8cf 100644
+--- a/run_onchange_before_0.1-packages-manager-installation.sh
++++ b/run_onchange_before_0.1-packages-manager-installation.sh
+@@ -23,6 +23,11 @@ if ! command -v luarocks 2>&1 >/dev/null; then
+   rm -rf $HOME/luarocks-3.11.1 $HOME/luarocks-3.11.1.tar.gz
+ fi
+ 
++# zoxide
++if ! command -v zoxide 2>&1 >/dev/null; then
++  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
++fi
++
+ # install fzf latest version from sources
+ if ! command -v fzf 2>&1 >/dev/null; then
+   cd $HOME
+```

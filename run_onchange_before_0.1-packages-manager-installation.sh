@@ -23,6 +23,11 @@ if ! command -v luarocks 2>&1 >/dev/null; then
   rm -rf $HOME/luarocks-3.11.1 $HOME/luarocks-3.11.1.tar.gz
 fi
 
+# zoxide
+if ! command -v zoxide 2>&1 >/dev/null; then
+  curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+fi
+
 # install fzf latest version from sources
 if ! command -v fzf 2>&1 >/dev/null; then
   cd $HOME

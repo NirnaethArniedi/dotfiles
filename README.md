@@ -38,7 +38,7 @@ See <https://www.chezmoi.io/quick-start> for informations about chezmoi.
   Python)
 - Some usefull CLI tools :
   - uv as a pip/pipx full replacement (python development)
-  - zoxide for fast directory jumping, configured with `j` and without the `z` shortcut
+  - zoxide for fast directory jumping, configured with `j` and without the `z` shortcut (installed via the upstream install script)
   - sesh for tmux session management
   - fzf for fuzzy finding
   - ripgrep for fast recursive search
