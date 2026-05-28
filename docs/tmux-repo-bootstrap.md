@@ -1,31 +1,28 @@
 # Repo-aware tmux session bootstrap
 
-*2026-05-28T14:35:00Z by Showboat 0.6.1*
-<!-- showboat-id: 26c8cc59-a22f-4e2a-ba4a-0464d278eb8c -->
+*2026-05-28T17:39:45Z by Showboat 0.6.1*
+<!-- showboat-id: 193b28d5-d21f-4b72-adaf-ddf49b8db000 -->
 
-Added an after-new-session tmux hook that bootstraps repo-root sessions with an editor window and an agent window. The helper script only triggers when the session path itself has a .git entry and leaves sessions with explicit startup commands untouched.
+Diagnosed the sesh failure against the live tmux server. The hook was already loaded, but it pointed at ~/.config/tmux/repo-bootstrap-session.sh, which had never been applied from chezmoi. There was a second bug too: chezmoi installs that helper as mode 0644, so invoking it directly would fail even after apply. The fix was to run it via bash from the hook, apply the managed files to the home directory, reload tmux, and stop using the vp alias for the editor bootstrap command because login non-interactive shells do not expand aliases from .zshrc.
 
 ```bash
-git diff -- dot_tmux.conf dot_config/tmux/repo-bootstrap-session.sh
+git diff -- dot_tmux.conf
 ```
 
 ```output
 diff --git a/dot_tmux.conf b/dot_tmux.conf
-index 5f86893..de75d1e 100644
+index 33597a1..a89dc3d 100644
 --- a/dot_tmux.conf
 +++ b/dot_tmux.conf
-@@ -44,6 +44,14 @@ setw -g pane-base-index  1     # Panes start at 1, not 0
- set  -g status-interval  5     # Status bar refresh interval (seconds)
- set  -g mouse            on
- setw -g monitor-activity on
-+set  -g detach-on-destroy off  # Don't detach when closing a session with multiple windows/panes
-+# ============================================================================
-+# Repo session bootstrap — editor + agent windows for git repos only
-+# ============================================================================
-+set  -g @repo-bootstrap-enabled        "on"
-+set  -g @repo-bootstrap-editor-command "nvim"
-+set  -g @repo-bootstrap-agent-command  "opencode"
-+set-hook -g after-new-session "run-shell -b '$HOME/.config/tmux/repo-bootstrap-session.sh #{q:session_id} #{q:session_path}'"
+@@ -49,9 +49,9 @@ set  -g detach-on-destroy off  # Don't detach when closing a session with multip
+ # Repo session bootstrap — editor + agent windows for git repos only
+ # ============================================================================
+ set  -g @repo-bootstrap-enabled        "on"
+-set  -g @repo-bootstrap-editor-command "vp"
++set  -g @repo-bootstrap-editor-command "nvim ."
+ set  -g @repo-bootstrap-agent-command  "omp"
+-set-hook -g after-new-session "run-shell -b '$HOME/.config/tmux/repo-bootstrap-session.sh #{q:session_id} #{q:session_path}'"
++set-hook -g after-new-session "run-shell -b 'bash \"$HOME/.config/tmux/repo-bootstrap-session.sh\" #{q:session_id} #{q:session_path}'"
  
  # ============================================================================
  # Window titles
@@ -33,52 +30,39 @@ index 5f86893..de75d1e 100644
 
 ```bash
 set -e
-bash -n dot_config/tmux/repo-bootstrap-session.sh
-ROOT=$(mktemp -d)
-REPO_DIR="$ROOT/repo"
-NON_REPO_DIR="$ROOT/plain"
-mkdir -p "$REPO_DIR" "$NON_REPO_DIR"
-git -C "$REPO_DIR" init -q
-CONFIG=$(mktemp)
-cat > "$CONFIG" <<"EOF"
-set -g base-index 1
-setw -g pane-base-index 1
-set -g @repo-bootstrap-enabled "on"
-set -g @repo-bootstrap-editor-command "printf editor-ready; sleep 1000"
-set -g @repo-bootstrap-agent-command "printf agent-ready; sleep 1000"
-set-hook -g after-new-session "run-shell -b '/home/alenormand/.local/share/chezmoi/dot_config/tmux/repo-bootstrap-session.sh #{q:session_id} #{q:session_path}'"
-EOF
-SOCK=repo_bootstrap_showboat
-tmux -L "$SOCK" -f "$CONFIG" new-session -d -s repo -c "$REPO_DIR"
-sleep 0.5
-printf "repo_windows\n%s\n" "$(tmux -L "$SOCK" list-windows -t repo -F '#{window_index}:#{window_name}:#{pane_current_command}')"
-printf -- "---\nrepo_editor_pane\n%s\n" "$(tmux -L "$SOCK" capture-pane -p -t repo:1.1)"
-printf -- "---\nrepo_agent_pane\n%s\n" "$(tmux -L "$SOCK" capture-pane -p -t repo:2.1)"
-tmux -L "$SOCK" new-session -d -s plain -c "$NON_REPO_DIR"
-sleep 0.3
-printf -- "---\nplain_windows\n%s\n" "$(tmux -L "$SOCK" list-windows -t plain -F '#{window_index}:#{window_name}:#{pane_current_command}')"
-tmux -L "$SOCK" new-session -d -s repo_cmd -c "$REPO_DIR" 'sleep 30'
-sleep 0.3
-printf -- "---\nrepo_cmd_windows\n%s\n" "$(tmux -L "$SOCK" list-windows -t repo_cmd -F '#{window_index}:#{window_name}:#{pane_current_command}')"
-tmux -L "$SOCK" kill-server
-rm -f "$CONFIG"
-rm -rf "$ROOT"
+stat -c "%a %n" /home/alenormand/.config/tmux/repo-bootstrap-session.sh
+printf "hook=%s\neditor=%s\nagent=%s\n" "$(tmux show-hooks -g after-new-session | tr "\n" " ")" "$(tmux show-options -gqv @repo-bootstrap-editor-command)" "$(tmux show-options -gqv @repo-bootstrap-agent-command)"
+SOCK="sesh_doc_$$"
+tmux -L "$SOCK" -f /home/alenormand/.tmux.conf new-session -d -s control -c "$HOME"
+script -qfc "tmux -L $SOCK attach -t control" /dev/null >/dev/null 2>&1 &
+sleep 1
+tmux -L "$SOCK" send-keys -t control:1.1 'sesh connect /home/alenormand/repos/battsignal' C-m
+sleep 3
+EDITOR_PANE_PID=$(tmux -L "$SOCK" display-message -p -t battsignal:1.1 '#{pane_pid}')
+AGENT_PANE_PID=$(tmux -L "$SOCK" display-message -p -t battsignal:2.1 '#{pane_pid}')
+printf "sessions\n"
+tmux -L "$SOCK" list-sessions -F '#{session_name}:#{session_windows}:#{session_path}'
+printf -- "---\nwindows\n"
+tmux -L "$SOCK" list-windows -a -F '#S:#I:#W:#{pane_current_path}'
+printf -- "---\neditor_children=%s\n" "$(ps -o comm= --ppid "$EDITOR_PANE_PID" | paste -sd, -)"
+printf "agent_children=%s\n" "$(ps -o comm= --ppid "$AGENT_PANE_PID" | paste -sd, -)"
+tmux -L "$SOCK" kill-server || true
 ```
 
 ```output
-repo_windows
-1:editor:zsh
-2:agent:zsh
+644 /home/alenormand/.config/tmux/repo-bootstrap-session.sh
+hook=after-new-session[0] run-shell -b "bash \"/home/alenormand/.config/tmux/repo-bootstrap-session.sh\" #{q:session_id} #{q:session_path}" 
+editor=nvim .
+agent=omp
+sessions
+battsignal:2:/home/alenormand/repos/battsignal
+control:1:/home/alenormand
 ---
-repo_editor_pane
-editor-ready
+windows
+battsignal:1:editor:/home/alenormand/repos/battsignal
+battsignal:2:agent:/home/alenormand/repos/battsignal
+control:1:zsh:/home/alenormand
 ---
-repo_agent_pane
-agent-ready
----
-plain_windows
-1:zsh:zsh
----
-repo_cmd_windows
-1:sleep:sleep
+editor_children=nvim
+agent_children=bun
 ```
