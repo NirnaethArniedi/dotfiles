@@ -1,5 +1,3 @@
-# CLAUDE.md — Coding Interaction Preferences
-
 ## Identity & Communication
 
 - **Language**: British English. Correct my English when needed.
@@ -135,6 +133,7 @@ Primary DataFrame library. I use it extensively and know the API well. When help
 - **Testing**: `pytest` with coverage, doctest-modules. Run pytest using "uv run pytest"
 - **Containerisation**: Docker, multi-stage builds, Alpine-based images preferred
 - **Cloud**: Databricks notebook to run Spark and production data related stuff
+- CLI: CLI tool we create should usually be run as "uv run ..." within the project, to respect uv environment.
 
 ### CI/CD
 
