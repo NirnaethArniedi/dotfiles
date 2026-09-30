@@ -6,7 +6,7 @@ return {
       opts.window = opts.window or {}
       opts.window.mappings = opts.window.mappings or {}
       opts.window.mappings["<cr>"] = "open_drop"
-      opts.open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline", "edgy", "toggleterm" }
+      opts.open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline", "edgy", "snacks_terminal" }
       return opts
     end,
   },
