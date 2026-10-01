@@ -1,0 +1,8 @@
+# Targets whose source files were deleted from this repo: chezmoi does not
+# remove them on its own, and stale Neovim plugin specs would keep loading.
+.config/nvim/lua/plugins/toggleterm.lua
+.config/nvim/lua/plugins/copilot.lua
+.config/nvim/lua/plugins/aider.lua
+.config/nvim/lua/plugins/lsp_config.lua
+.config/nvim/lua/plugins/masonlsp.lua
+.config/nvim/lua/plugins/example.lua

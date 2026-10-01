@@ -8,24 +8,21 @@ sudo apt update
 
 sudo apt full-upgrade -y
 
+# Not from apt on purpose:
+# - Node.js: fnm (apt's nodejs is too old for Copilot)
+# - Lua/LuaRocks: lazy.nvim builds its own via hererocks (needs python3 + build-essential)
+# - fzf, sesh, lazygit: GitHub release binaries (apt's fzf/golang are too old)
 sudo apt install -y \
+  git \
+  curl \
   python3-full \
   build-essential \
-  libreadline-dev \
   neovim \
   ripgrep \
   fd-find \
   unzip \
-  nodejs \
-  npm \
-  lua5.1 \
-  liblua5.1-0-dev \
-  liblua5.1-0 \
-  python3-neovim \
-  fish \
   zsh \
   tmux \
   btop \
-  golang \
   ncal \
   tree
