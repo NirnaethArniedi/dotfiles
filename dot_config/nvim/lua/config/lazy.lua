@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   -- bootstrap lazy.nvim
   -- stylua: ignore
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
@@ -10,10 +10,7 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import any extras modules here
-    -- { import = "lazyvim.plugins.extras.lang.typescript" },
-    -- { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.python" },
+    -- extras are enabled in lazyvim.json (:LazyExtras), not here
     -- import/override with your plugins
     { import = "plugins" },
   },
@@ -28,6 +25,9 @@ require("lazy").setup({
   },
   -- install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true }, -- automatically check for plugin updates
+  -- Always use lazy.nvim's self-contained Lua 5.1 + LuaRocks (hererocks), even if a
+  -- system luarocks exists, so every machine resolves rocks the same way
+  rocks = { hererocks = true },
   performance = {
     rtp = {
       -- disable some rtp plugins
