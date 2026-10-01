@@ -101,6 +101,21 @@ zstyle :omz:plugins:ssh-agent lazy yes
 zstyle :omz:plugins:ssh-agent ssh-add-args -q
 zstyle ':omz:plugins:alias-finder' autoload yes   # Auto-suggest after commands
 zstyle ':omz:plugins:alias-finder' cheaper yes    # Only show shorter aliases
+
+# Docker Desktop's WSL integration symlinks _docker into vendor-completions; while
+# Docker Desktop is stopped the link dangles and compinit fails to read it. In that
+# case swap the directory in fpath for a cache dir linking only its valid entries.
+_vendor_comp=/usr/share/zsh/vendor-completions
+_vendor_broken=($_vendor_comp/*(N-@)) # (-@): dangling symlinks
+if (( $#_vendor_broken )); then
+  _vendor_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/vendor-completions"
+  mkdir -p "$_vendor_cache"
+  rm -f "$_vendor_cache"/*(N@)
+  ln -s $_vendor_comp/*(N-.) "$_vendor_cache"/
+  fpath=("${(@)fpath/#%$_vendor_comp/$_vendor_cache}")
+fi
+unset _vendor_comp _vendor_broken _vendor_cache
+
 source $ZSH/oh-my-zsh.sh
 source ~/.config/zsh/fzf-git.sh
 # User configuration

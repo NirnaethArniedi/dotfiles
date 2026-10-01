@@ -1,0 +1,4 @@
+# Ubuntu's /etc/zsh/zshrc runs compinit before ~/.zshrc; oh-my-zsh runs it again
+# (with a cached dump), so skip the global one. Must live here: /etc/zsh/zshrc is
+# read before ~/.zshrc.
+skip_global_compinit=1
