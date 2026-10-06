@@ -66,3 +66,18 @@ control:1:zsh:/home/alenormand
 editor_children=nvim
 agent_children=bun
 ```
+
+Second bug: the bootstrap only worked on some session creations. The hook fires asynchronously and checked #{pane_current_command}, which during zsh startup reads tmux (pre-exec), then mkdir/ln from .zshrc, before settling on zsh. Losing that race made the script exit silently (8/20 failures in a loop). The check now uses #{pane_start_command}, which is empty for a default-shell pane and deterministic at hook time. Sampling what the pane reports during startup:
+
+```bash
+S=sb_$$; tmux -L $S new-session -d -s ctl; tmux -L $S set-hook -gu after-new-session; tmux -L $S new-session -d -s t -c ~; for n in $(seq 60); do tmux -L $S display -p -t t:1.1 "cur=#{pane_current_command} start=[#{pane_start_command}]"; done | uniq -c | sed "s/^ *[0-9]* //" | uniq; tmux -L $S kill-server
+```
+
+```output
+cur=tmux start=[]
+cur=zsh start=[]
+cur=mkdir start=[]
+cur=zsh start=[]
+cur=mkdir start=[]
+cur=zsh start=[]
+```

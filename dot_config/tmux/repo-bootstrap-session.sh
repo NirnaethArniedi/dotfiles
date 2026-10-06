@@ -15,17 +15,6 @@ is_enabled() {
   esac
 }
 
-is_shell_command() {
-  case "${1:-}" in
-    sh|ash|bash|dash|fish|ksh|mksh|nu|zsh)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
 wrap_in_login_shell() {
   local command=$1
   local login_shell=$2
@@ -43,7 +32,9 @@ agent_command=$(tmux show-option -gvq @repo-bootstrap-agent-command)
 shell_path=$(tmux show-option -gv default-shell)
 session_windows=$(tmux display-message -p -t "$session_id" "#{session_windows}")
 window_panes=$(tmux display-message -p -t "${session_id}:1" "#{window_panes}")
-pane_command=$(tmux display-message -p -t "${session_id}:1.1" "#{pane_current_command}")
+# pane_start_command is empty when the pane runs the default shell; unlike
+# pane_current_command it is not racy while the shell is still starting up
+pane_start_command=$(tmux display-message -p -t "${session_id}:1.1" "#{pane_start_command}")
 
 : "${enabled:=on}"
 : "${editor_command:=nvim}"
@@ -62,7 +53,7 @@ if [ "$session_windows" != "1" ] || [ "$window_panes" != "1" ]; then
   exit 0
 fi
 
-if ! is_shell_command "$pane_command"; then
+if [ -n "$pane_start_command" ]; then
   exit 0
 fi
 
